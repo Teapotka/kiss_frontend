@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+    <title>Send a kiss</title>
+</head>
+<body>
+    <style>
+        *{
+            font-family: 'Caveat', cursive;
+        }
+        body, html{
+            width: 100%;
+            height: 100%;
+        }
+        div{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+    <div>
+        <h1>Send a kiss to <span id="elie" onclick="choose('elie')">Elie</span> / <span id="timi" onclick="choose('timi')">Timi</span> !</h1>
+        <div id="container" style="display: none;">
+            <img id="kiss" onclick="kiss()" src="./kiss.png" height="200"/>
+            <h1>You have <span id="counter">0</span></h1>
+            <h1 id="loader"></h1>
+        </div>
+    </div>
+</body>
+<script>
+    let flag = false
+    let chosen = ""
+    document.getElementById('counter').innerHTML = "100"
+    const choose = (id) => {
+        document.getElementById("timi").style.color = "black"
+        document.getElementById("elie").style.color = "black"
+        console.log(id)
+        flag = true
+        chosen = id
+        show()
+        document.getElementById(id).style.color = "red"
+    }
+    const show = async () => {
+        if (flag) document.getElementById('container').style.display = "flex"
+        document.getElementById('counter').innerHTML = 'checking...'
+        const raw = await fetch('https://kiss-u.onrender.com/values')
+        const values = await raw.json()
+        document.getElementById('counter').innerHTML = values[chosen]
+    }
+    const kiss = async () => {
+        let toWho = chosen == 'elie' ? 'timi' : 'elie' 
+        document.getElementById('loader').innerHTML = `sending your kiss to ${toWho.slice(0,1).toUpperCase()+toWho.slice(1)}`
+        const raw = await fetch(`https://kiss-u.onrender.com/${toWho}`)
+        const values = await raw.json()
+        document.getElementById('loader').innerHTML = ``
+        await show()
+    }
+</script>
+</html>
