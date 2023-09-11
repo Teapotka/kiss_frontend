@@ -19,7 +19,7 @@ const choose = async (id) => {
 const show = async () => {
   if (flag) document.getElementById("container").style.display = "flex"
   document.getElementById("counter").innerHTML = "checking..."
-  const raw = await fetch(`${testUrl}/values?name=${chosen}`)
+  const raw = await fetch(`${url}/values?name=${chosen}`)
   const person = await raw.json()
   document.getElementById("counter").innerHTML = person["value"]
   console.log("show: "+ JSON.stringify(person))
@@ -31,7 +31,7 @@ const kiss = async () => {
     toWho.slice(0, 1).toUpperCase() + toWho.slice(1)
   }`
 
-  const raw = await fetch(`${testUrl}/kiss`, {
+  const raw = await fetch(`${url}/kiss`, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
