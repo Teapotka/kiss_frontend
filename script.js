@@ -1,5 +1,4 @@
 const url = "https://kiss-u.onrender.com"
-const testUrl = "http://localhost:3000"
 
 let flag = false
 let chosen = ""
@@ -26,6 +25,7 @@ const show = async () => {
 }
 
 const kiss = async () => {
+  document.getElementById('kiss').setAttribute('disabled', '')
   let toWho = chosen == "elie" ? "timi" : "elie"
   document.getElementById("loader").innerHTML = `sending your kiss to ${
     toWho.slice(0, 1).toUpperCase() + toWho.slice(1)
@@ -45,4 +45,5 @@ const kiss = async () => {
 
   document.getElementById("loader").innerHTML = ``
   await show()
+  document.getElementById('kiss').removeAttribute('disabled')
 }
